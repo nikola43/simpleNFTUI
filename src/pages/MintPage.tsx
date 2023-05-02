@@ -23,6 +23,7 @@ function App() {
 	const [amount, setAmount] = useState(1);
 	const [mintedAmount, setMintedAmount] = useState(0);
 	const [maxSupply, setMaxSupply] = useState("0");
+	const [usdtBalance, setUsdtBalance] = useState("0");
 
 	let nftMintContract: any;
 	let usdtContract: any;
@@ -39,12 +40,10 @@ function App() {
 	useEffect(() => {
 		if (account) {
 			getUSDTAllowance().then(() => {});
-
 			getCost().then(() => {});
-
 			getTotalSupply().then(() => {});
-
 			getMaxSupply().then(() => {});
+			getUsdtBalance().then(() => {});
 		}
 	}, [account]);
 
@@ -72,11 +71,11 @@ function App() {
 		setCost(cost);
 	}
 
-	async function getUsdtBalance(): Promise<string> {
+	async function getUsdtBalance() {
 		const balance: string = await usdtContract.methods
 			.balanceOf(account)
 			.call();
-		return balance;
+		setUsdtBalance(balance);
 	}
 
 	async function approveUSDT() {
@@ -94,13 +93,7 @@ function App() {
 					console.log(res);
 					toast.success("Approved Successfully");
 					setIsApproveLoading(false);
-					getUSDTAllowance().then(() => {
-						console.log("Allowance: ", allowance);
-					});
-
-					getTotalSupply().then(() => {
-						console.log("Minted: ", mintedAmount);
-					});
+					getUSDTAllowance().then(() => {});
 				},
 				(err: any) => {
 					console.log(err);
@@ -137,6 +130,8 @@ function App() {
 					console.log(res);
 					toast.success("Minted Successfully");
 					setIsMintingOneLoading(false);
+					getTotalSupply().then(() => {});
+					getUsdtBalance().then(() => {});
 				},
 				(err: any) => {
 					console.log(err);
@@ -157,6 +152,10 @@ function App() {
 
 			<section className="box_section">
 				<img src={type1} style={{ width: "18rem" }} alt="" />
+				<h3>
+					Balance {Number(formatUnits(usdtBalance, "ether")).toFixed(2)}{" "}
+					USDT
+				</h3>
 				<h3>Cost {formatUnits(cost, "ether")} USDT</h3>
 				<h3>Minted {mintedAmount} / 160</h3>
 

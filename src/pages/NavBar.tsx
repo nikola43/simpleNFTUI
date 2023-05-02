@@ -24,7 +24,6 @@ function NavBar() {
 		*/
 	}, [chainId]);
 
-	/*
 	useEffect(() => {
 		const isWalletConnected = localStorage.getItem("isWalletConnected");
 		const connector = localStorage.getItem("connector");
@@ -32,7 +31,6 @@ function NavBar() {
 			activate(injected);
 		}
 	}, [active]);
-	*/
 
 	async function connectMetamaks() {
 		try {
