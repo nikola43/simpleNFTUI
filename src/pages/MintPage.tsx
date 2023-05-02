@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { formatUnits } from "ethers";
 
 const NftMintAddress = "0xbCDF8fDCA509DA0255eA2801F2B40d207484EDaC";
-const USDTAddress = "0x263f90bcA00A6E987334D55501Bd8C0D081CeE62";
+const USDTAddress = "0x43B552A6A5B97f120788A8751547D5D953eFBBcA";
 
 function App() {
 	const { active, account, library, activate, deactivate, chainId } =
