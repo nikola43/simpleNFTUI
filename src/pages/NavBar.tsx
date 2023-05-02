@@ -1,17 +1,30 @@
 import { useWeb3React } from "@web3-react/core";
 import { useEffect } from "react";
 
-import { injected } from "../blockchain/metamaskConnector";
+import { injected, swithNetwork } from "../blockchain/metamaskConnector";
 import discord from "../Materials/discord.svg";
 import forum from "../Materials/forum.png";
 import twitter from "../Materials/twitter.svg";
+import ChainParams from "../blockchain/chainParams";
 
 // import abi file
 
 function NavBar() {
+	const selectedChainId = 421613;
 	const { active, account, library, activate, deactivate, chainId } =
 		useWeb3React();
 
+	useEffect(() => {
+		swithNetwork(ChainParams[0]);
+
+		/*
+		if (active && chainId !== selectedChainId) {
+			swithNetwork(ChainParams[0]);
+		}
+		*/
+	}, [chainId]);
+
+	/*
 	useEffect(() => {
 		const isWalletConnected = localStorage.getItem("isWalletConnected");
 		const connector = localStorage.getItem("connector");
@@ -19,14 +32,15 @@ function NavBar() {
 			activate(injected);
 		}
 	}, [active]);
+	*/
 
 	async function connectMetamaks() {
 		try {
 			await activate(injected, undefined, true);
 			localStorage.setItem("connector", "injected");
 			localStorage.setItem("isWalletConnected", "true");
-		} catch (ex) {
-			console.log(ex);
+		} catch (ex: any) {
+			console.log(ex.code);
 		}
 	}
 

@@ -18,6 +18,7 @@ export const switchRequest = (param: any) => {
 
 export const addChainRequest = (param: any) => {
     if (ethereum !== undefined) {
+        console.log("addChainRequest", param);
         //@ts-ignore
         return ethereum.request({
             method: "wallet_addEthereumChain",
@@ -35,11 +36,11 @@ export const addChainRequest = (param: any) => {
 };
 
 export const swithNetwork = async (param: any) => {
-    // console.log("chainId", chainId);
     if (window.ethereum) {
         try {
             await switchRequest(param);
         } catch (error: any) {
+
             if (error.code === 4902) {
                 try {
                     await addChainRequest(param);
